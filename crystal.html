@@ -1,60 +1,34 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>Crash's Crystal Collector</title>
-  
-  <style type="text/css">
-    .crystal-image {
-      width: 300px;
-      height: 300px;
-    }
-
-    #container {
-    	border: solid;
-    	border-color: black;
-    	width: 500px;
-    	float:left;
-    	padding-left: 10px;
-    	margin-right: 10px;
-    	font-family: "Comic Sans MS", cursive;
-    	color: blue;
-    }
-
-    #totalscore {
-    	border: dotted;
-    	padding-left: 10px;
-    	float: right;
-    	width: 500px;
-    	height: 250px;
-    	font-size: 75px;
-    }
-
-    
-
-
-
-
-  </style>
-
+    <title>Crash's Crystal Collector</title>
+    <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
+
 <body>
-
-  <img src="https://www.crashmania.net/images/encyclopedia/characters/crash-bandicoot/crash-bandicoot-crash-bandicoot-the-wrath-of-cortex.jpg">
-
-  <div id = "container">
-
-	  <p>Help Crash collect his crystals in order to stop Cortex's new nefarious plan! Each time the page is refreshed, a random number will appear on screen. Your goal is to match that number by clicking on the crystals to add points.</p>
-
-	  <p>The crystal values will only be displayed once you click on them, so choose wisely. Their values are randomized at the start of every game.</p>
-
-	  <p>Go over the target score, and it's game over. Good luck!</p>
-
-  </div>
-
-  <div id = "totalscore">
-  </div>
-
-  <div>
+    <div class="jumbotron text-center">
+        <img src="https://vignette3.wikia.nocookie.net/crashban/images/6/69/Crash_Bandicoot_The_Wrath_of_Cortex_Copterpack.png/revision/latest?cb=20170115095743" id="crashpic" height=330px, width=300px>
+        <h1 class="display-3">Crash's Crystal Collector</h1>
+        <p class="lead">Help Crash Bandicoot collect his crystals in order to stop Cortex's domination plan! Your goal is to match the target number by clicking on the crystals to add points. Each of the 4 crystals have different values, and they will only be displayed once you click on them, so choose wisely. Their values are randomized at the start of every game. Go over the target score, and it's game over. Good luck!</p>
+        <br>
+        <br>
+        <button type="button" class="btn btn-warning" id="new-game-button">New Game</button>
+        <button type="button" class="btn btn-warning" id="play-again">Play Again!</button>
+        <div id="number-to-guess">
+        </div>
+        <h2></h2>
+        <br>
+        <br>
+        <hr>
+        <div id="totalscore">
+        </div>
+        <div id="crystals">
+        </div>
+    </div>
+    <!--   <div>
         <p>Wins: </p>
         <span id="wins"></span>
       </div>
@@ -62,79 +36,10 @@
       <div>
         <p>Losses: </p>
         <span id="losses"></span>
-      </div>
-
-  <h1>Number to Guess: <span id="number-to-guess"></span></h1>
-
-  <!-- Note that this div is now empty. We will fill it dynamically -->
-  <div id="crystals">
-  </div>
-
-  <!-- JAVASCRIPT  -->
-  <!-- ========================================= -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="jquery-3.2.1.min.js"></script>
-
-  <script type="text/javascript">
-
-	  var audio = new Audio("crashturtlewoods.mp3");
-	  audio.play();
-
-	  var targetNumber = Math.floor(Math.random() * 120) + 19;
-	  $("#number-to-guess").text(targetNumber);
-	  var counter = 0;
-	  // Now for the hard part. Creating multiple crystals each with their own unique number value.
-	  // We begin by expanding our array to include four options.
-
-	  var crystalone = [Math.floor(Math.random() * 12) + 1];
-	  var crystaltwo = [Math.floor(Math.random() * 12) + 1];
-	  var crystalthree = [Math.floor(Math.random() * 12) + 1];
-	  var crystalfour = [Math.floor(Math.random() * 12) + 1];
-
-	  var crystalNumbers = [crystalone, crystaltwo, crystalthree, crystalfour];
-	  
-	  // Next we create a for loop to create crystals for every numberOption.
-	  for (var i = 0; i < crystalNumbers.length; i++) {
-	    // For each iteration, we will create an imageCrystal
-	    var imageCrystal = $("<img>");
-	    // First each crystal will be given the class ".crystal-image".
-	    // This will allow the CSS to take effect.
-	    imageCrystal.addClass("crystal-image");
-	    // Each imageCrystal will be given a src link to the crystal image
-	    imageCrystal.attr("src", "https://s-media-cache-ak0.pinimg.com/originals/fd/49/56/fd49565d092056525f9eb6e01acc564b.jpg");
-	    // Each imageCrystal will be given a data attribute called data-crystalValue.
-	    // This data attribute will be set equal to the array value.
-	    imageCrystal.attr("data-crystalvalue", crystalNumbers[i]);
-	    // Lastly, each crystal image (with all it classes and attributes) will get added to the page.
-	    $("#crystals").append(imageCrystal);
-	  }
-	  // This time, our click event applies to every single crystal on the page. Not just one.
-	  $(".crystal-image").on("click", function() {
-	    // Determining the crystal's value requires us to extract the value from the data attribute.
-	    // Using the $(this) keyword specifies that we should be extracting the crystal value of the clicked crystal.
-	    // Using the .attr("data-crystalvalue") allows us to grab the value out of the "data-crystalvalue" attribute.
-	    // Since attributes on HTML elements are strings, we must convert it to an integer before adding to the counter
-	    
-	    var crystalValue = ($(this).attr("data-crystalvalue"));
-	    crystalValue = parseInt(crystalValue);
-	    // We then add the crystalValue to the user's "counter" which is a global variable.
-	    // Every click, from every crystal adds to the global counter.
-	    counter += crystalValue;
-	    var wins = 0;
-	    var losses = 0;
-	    // All of the same game win-lose logic applies. So the rest remains unchanged.
-	    $("#totalscore").text("New score: " + counter);
-	    if (counter === targetNumber) {
-	    	wins++;
-	      $("#totalscore").text("You win!");
-	      $("#wins").text(wins);
-	    }
-	    else if (counter >= targetNumber) {
-	    	losses++
-	      $("#totalscore").text("Sorry, try again!");
-	      $("#losses").text(losses);
-	    }
-	  });
-  </script>
+      </div> -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="assets/javascript/crystal.js"></script>
 </body>
+
 </html>
