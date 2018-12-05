@@ -1,9 +1,11 @@
 .display-3 {
     font-family: 'Acme', sans-serif;
+    color: white;
 }
 
-body {
-    background-image: url("assets/images/background.jpg");
+#background {
+    background-image: url(https://images6.alphacoders.com/849/849501.jpg);
+    height: 100%;
 }
 
 .crystal-image {
@@ -28,4 +30,8 @@ body {
 
 #crashpic {
     float: right;
+}
+
+.lead, #number-to-guess, #totalscore {
+    color: white;
 }
