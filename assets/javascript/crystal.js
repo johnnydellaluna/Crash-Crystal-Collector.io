@@ -1,9 +1,13 @@
 $("#play-again").hide();
 
-var audio = new Audio("crashturtlewoods.mp3");
-audio.play();
+
+
 
 $("#new-game-button").on("click", function newGame() {
+
+    var audio = new Audio("assets/crashturtlewoods.mp3");
+    audio.play();
+    
     $("#new-game-button").hide();
 
     var targetNumber = Math.floor(Math.random() * 120) + 19;
@@ -66,7 +70,7 @@ $("#new-game-button").on("click", function newGame() {
     })
 });
 $("#play-again").on("click", function restartGame() {
-    newGame()
+    window.location.reload()
+    audio.load()
 
-});
-restartGame();
+})
